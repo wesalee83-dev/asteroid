@@ -1,0 +1,16 @@
+{
+  "name": "asteroid",
+  "version": "1.0.0",
+  "description": "Swiss Army Knife of tools for fetching, validating, and enriching data",
+  "main": "cli.js",
+  "bin": {
+    "asteroid": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js"
+  },
+  "keywords": ["cli", "data", "validation", "enrichment"],
+  "author": "Wes",
+  "license": "ISC",
+  "type": "commonjs"
+}
