@@ -1,0 +1,29 @@
+{
+  "name": "asteroid",
+  "version": "1.0.0",
+  "description": "Swiss Army Knife of tools for fe",
+  "main": "cli.js",
+  "bin": {
+    "asteroid": "cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js"
+  },
+  "keywords": [
+    "cli",
+    "data",
+    "validation",
+    "enrichment"
+  ],
+  "author": "Wes",
+  "license": "ISC",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesalee83-dev/a"
+  },
+  "bugs": {
+    "url": "https://github.com/wesalee83-dev/aster"
+  },
+  "homepage": "https://github.com/wesalee83-dev/as"
+}

@@ -1,0 +1,81 @@
+#!/data/data/com.termux/files/usr/bin/node
+
+import { runMutation } from "../agent/run.js";
+import { quip } from "../agent/agent_helper.js";
+import fs from "fs";
+
+const args = process.argv.slice(2);
+const command = args[0];
+
+// Router
+switch (command) {
+  case "mutate":
+    await runMutation();
+    break;
+
+  case "boot":
+    quip("boot");
+    break;
+
+  case "rest":
+    quip("rest");
+    break;
+
+  case "saga":
+    showSaga();
+    break;
+
+  case "state":
+    showState();
+    break;
+
+  default:
+    console.log(`
+Asteroid CLI
+
+Commands:
+  asteroid mutate     Run the next mutation
+  asteroid boot       Play a boot quip
+  asteroid rest       Play a rest quip
+  asteroid saga       Show saga log
+  asteroid state      Show current agent state
+`);
+}
+
+// ----------------------
+// Helper functions
+// ----------------------
+
+function showSaga() {
+  const logPath = "../agent/logs/saga_tales.log";
+  try {
+    const text = fs.readFileSync(new URL(logPath, import.meta.url), "utf8");
+    console.log(text);
+  } catch (err) {
+    console.error("Could not read saga log:", err);
+  }
+}
+
+function showState() {
+  const statePath = "../agent/agent_state.json";
+  try {
+    const text = fs.readFileSync(new URL(statePath, import.meta.url), "utf8");
+    console.log(text);
+  } catch (err) {
+    console.error("Could not read agent state:", err);
+  }
+export async function runMutation() {
+  polly("Applying mutation");
+  const mutated = mutate(state, mutation, `mutation-${state.mutations || 0}`);
+
+  polly("Saving new form");
+  fs.writeFileSync(statePath, JSON.stringify(mutated, null, 2));
+
+  const entry = `[${new Date().toISOString()}] Mutation → ${mutated.persona}`;
+  fs.appendFileSync(logPath, entry + "\n");
+
+  polly("Pipeline complete");
+  console.log(`Pipeline complete. New form: ${mutated.persona}`);
+}
+}
+
