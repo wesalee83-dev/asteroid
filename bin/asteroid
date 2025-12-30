@@ -77,5 +77,3 @@ export async function runMutation() {
   polly("Pipeline complete");
   console.log(`Pipeline complete. New form: ${mutated.persona}`);
 }
-}
-
