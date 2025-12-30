@@ -1,0 +1,12 @@
+{
+  "-y": {
+    "name": "-y",
+    "path": "/data/data/com.termux/files/home/tools/asteroid/agent/modules/-y",
+    "entry": "/data/data/com.termux/files/home/tools/asteroid/agent/modules/-y/index.js"
+  },
+  "-z": {
+    "name": "-z",
+    "path": "/data/data/com.termux/files/home/tools/asteroid/agent/modules/-z",
+    "entry": "/data/data/com.termux/files/home/tools/asteroid/agent/modules/-z/index.js"
+  }
+}

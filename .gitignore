@@ -3,6 +3,11 @@ node_modules/
 
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
 
 # OS junk
 .DS_Store
@@ -10,7 +15,33 @@ Thumbs.db
 
 # Env files
 .env
+.env.local
+.env.*.local
 
 # Build artifacts
 dist/
 build/
+lib/
+
+# npm / npx caches (Termux sometimes puts these in odd places)
+.npm/
+.npm-cache/
+.npx/
+
+# Editor junk
+*.swp
+*.swo
+*.tmp
+
+# VS Code
+.vscode/
+
+# Node REPL history
+.node_repl_history
+
+# Coverage output
+coverage/
+
+# Temporary files
+tmp/
+temp/

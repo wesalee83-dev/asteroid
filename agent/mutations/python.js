@@ -1,10 +1,27 @@
-import json
-import sys
+import { spawnSync } from 'child_process'
+import path from 'path'
 
-state = json.load(sys.stdin)
+export function mutate(state, mutationFn) {
+  const pyPath = path.join(process.cwd(), 'mutations', 'mutate.py')
+  const input = JSON.stringify(state)
 
-# Example mutation
-state["mood"] = "python-evolving"
-state["tasksCompleted"] = state.get("tasksCompleted", 0) + 1
+  const result = spawnSync('python3', [pyPath, input], {
+    encoding: 'utf8'
+  })
 
-json.dump(state, sys.stdout)
+  try {
+    const output = JSON.parse(result.stdout)
+    return {
+      ...output,
+      module: 'python',
+      note: 'Mutation performed by Python bridge'
+    }
+  } catch (err) {
+    console.error('Python mutation failed:', err.message)
+    return {
+      ...state,
+      module: 'python',
+      note: 'Python mutation failed'
+    }
+  }
+}

@@ -3,4 +3,5 @@
 def main():
     print("Asteroid seedling is running.")
 
-if __name__ == "__main__":    main()
+if __name__ == "__main__":
+    main()

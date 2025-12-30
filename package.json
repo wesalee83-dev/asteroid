@@ -1,13 +1,19 @@
 {
   "name": "asteroid",
-  "version": "1.0.0",
-  "description": "Swiss Army Knife of tools for fe",
-  "main": "cli.js",
+  "version": "1.22.22",
+  "description": "Swiss Army Knife of tools for FE enrichment, validation, and mutation",
+  "main": "bin/asteroid",
   "bin": {
-    "asteroid": "cli.js"
+    "asteroid": "bin/asteroid"
   },
   "scripts": {
-    "start": "node cli.js"
+    "start": "node ./bin/asteroid",
+    "dev": "node ./bin/asteroid dev",
+    "persona:run-efficient": "node ./bin/asteroid run -- --persona efficient",
+    "task:review": "node ./scripts/review-tasks.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "keywords": [
     "cli",
@@ -15,15 +21,17 @@
     "validation",
     "enrichment"
   ],
-  "author": "Wes",
-  "license": "ISC",
+  "author": "wesalee83-dev",
+  "license": "MIT",
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wesalee83-dev/a"
-  },
+  "repository": "https://github.com/wesalee83-dev/asteroid",
   "bugs": {
-    "url": "https://github.com/wesalee83-dev/aster"
+    "url": "https://github.com/wesalee83-dev/asteroid/issues"
   },
-  "homepage": "https://github.com/wesalee83-dev/as"
+  "homepage": "https://github.com/wesalee83-dev/asteroid",
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.7.4"
+  }
 }

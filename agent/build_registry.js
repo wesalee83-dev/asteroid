@@ -1,48 +1,51 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-const agentDir = __dirname;
-const mutations = scanDirectory(mutationsDir, "mutations");
-const helpers = scanDirectory(path.join(agentDir, "helpers"), "helpers");
-const registryPath = path.join(agentDir, "modules.json");
+// Paths
+const modulesJsonPath = path.join(__dirname, 'modules.json')
+const registryPath = path.join(__dirname, 'registry.json')
+const modulesDir = path.join(__dirname, 'modules')
 
-function scanDirectory(dir, baseLabel) {
-  const entries = {};
+// Load module list
+const moduleNames = JSON.parse(fs.readFileSync(modulesJsonPath, 'utf8'))
 
-  for (const item of fs.readdirSync(dir)) {
-    const full = path.join(dir, item);
-    const stat = fs.statSync(full);
+// Build registry
+export function buildRegistry() {
+  const registry = {}
 
-    if (stat.isDirectory()) continue;
+  for (const name of moduleNames) {
+    const moduleDir = path.join(modulesDir, name)
+    const entry = path.join(moduleDir, 'index.js')
 
-    const ext = path.extname(item);
-    const name = path.basename(item, ext);
+    if (!fs.existsSync(moduleDir)) {
+      console.warn(`Warning: Module folder missing: ${name}`)
+      continue
+    }
 
-    if (ext === ".js" || ext === ".py") {
-      const label = baseLabel ? `${baseLabel}/${name}` : name;
-      entries[label] = {
-        path: full,
-        type: ext.slice(1),
-        status: "active"
-      };
+    if (!fs.existsSync(entry)) {
+      console.warn(`Warning: Module entry missing: ${entry}`)
+      continue
+    }
+
+    registry[name] = {
+      name,
+      path: moduleDir,
+      entry
     }
   }
 
-  return entries;
+  // Write registry.json
+  fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2))
+
+  console.log('Registry rebuilt.')
+  console.log(`Modules found: ${Object.keys(registry).join(', ')}`)
 }
 
-function buildRegistry() {
-  const registry = {
-    ...scanDirectory(agentDir, null),
-    ...scanDirectory(mutationsDir, "mutations")
-  };
-
-  fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2));
-  console.log("modules.json updated with", Object.keys(registry).length, "entries.");
+// Auto-run if executed directly
+if (process.argv[1] === __filename) {
+  buildRegistry()
 }
-
-buildRegistry();

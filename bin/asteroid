@@ -1,33 +1,39 @@
 #!/data/data/com.termux/files/usr/bin/node
 
-import { runMutation } from "../agent/run.js";
-import { quip } from "../agent/agent_helper.js";
-import fs from "fs";
+import { runMutation } from '../agent/run.js'
+import { quip } from '../agent/agent_helpers.js'
+import fs from 'fs'
 
-const args = process.argv.slice(2);
-const command = args[0];
+const args = process.argv.slice(2)
+const command = args[0]
 
+// ----------------------
 // Router
+// ----------------------
 switch (command) {
-  case "mutate":
-    await runMutation();
-    break;
+  case 'mutate':
+    await runMutation()
+    break
 
-  case "boot":
-    quip("boot");
-    break;
+  case 'boot':
+    quip('boot')
+    break
 
-  case "rest":
-    quip("rest");
-    break;
+  case 'rest':
+    quip('rest')
+    break
 
-  case "saga":
-    showSaga();
-    break;
+  case 'saga':
+    showSaga()
+    break
 
-  case "state":
-    showState();
-    break;
+  case 'state':
+    showState()
+    break
+
+  case 'run':
+    await runPersona()
+    break
 
   default:
     console.log(`
@@ -39,7 +45,9 @@ Commands:
   asteroid rest       Play a rest quip
   asteroid saga       Show saga log
   asteroid state      Show current agent state
-`);
+  asteroid run        Run a persona
+`)
+    break
 }
 
 // ----------------------
@@ -47,35 +55,34 @@ Commands:
 // ----------------------
 
 function showSaga() {
-  const logPath = "../agent/logs/saga_tales.log";
+  const logPath = '../agent/logs/saga_tales.log'
   try {
-    const text = fs.readFileSync(new URL(logPath, import.meta.url), "utf8");
-    console.log(text);
+    const text = fs.readFileSync(new URL(logPath, import.meta.url), 'utf8')
+    console.log(text)
   } catch (err) {
-    console.error("Could not read saga log:", err);
+    console.error('Could not read saga log:', err.message)
   }
 }
 
 function showState() {
-  const statePath = "../agent/agent_state.json";
+  const statePath = '../agent/agent_state.json'
   try {
-    const text = fs.readFileSync(new URL(statePath, import.meta.url), "utf8");
-    console.log(text);
+    const text = fs.readFileSync(new URL(statePath, import.meta.url), 'utf8')
+    console.log(text)
   } catch (err) {
-    console.error("Could not read agent state:", err);
+    console.error('Could not read agent state:', err.message)
   }
-export async function runMutation() {
-  polly("Applying mutation");
-  const mutated = mutate(state, mutation, `mutation-${state.mutations || 0}`);
-
-  polly("Saving new form");
-  fs.writeFileSync(statePath, JSON.stringify(mutated, null, 2));
-
-  const entry = `[${new Date().toISOString()}] Mutation → ${mutated.persona}`;
-  fs.appendFileSync(logPath, entry + "\n");
-
-  polly("Pipeline complete");
-  console.log(`Pipeline complete. New form: ${mutated.persona}`);
-}
 }
 
+async function runPersona() {
+  const personaName = args.includes('--persona')
+    ? args[args.indexOf('--persona') + 1]
+    : 'default'
+
+  const input = args.slice(2).join(' ')
+
+  const { runWithPersona } = await import('../agent/persona_runner.js')
+  const output = await runWithPersona(personaName, input)
+
+  console.log(output)
+}

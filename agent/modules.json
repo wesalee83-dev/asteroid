@@ -1,42 +1,5 @@
-{
-  "agent_helper": {
-    "path": "agent/agent_helper.js",
-    "type": "js",
-    "status": "active"
-  },
-  "build_registry": {
-    "path": "agent/build_registry.js",
-    "type": "js",
-    "status": "active"
-  },
-  "quips": {
-    "path": "agent/quips.js",
-    "type": "js",
-    "status": "active"
-  },
-  "run": {
-    "path": "agent/run.js",
-    "type": "js",
-    "status": "active"
-  },
-  "mutations/first": {
-    "path": "agent/mutations/first.js",
-    "type": "js",
-    "status": "active"
-  },
-  "mutations/python": {
-    "path": "agent/mutations/python.js",
-    "type": "js",
-    "status": "active"
-  },
-  "mutations/python_bridge": {
-    "path": "agent/mutations/python_bridge.js",
-    "type": "js",
-    "status": "active"
-  },
-  "mutations/mutate_agent": {
-    "path": "agent/mutations/mutate_agent.js",
-    "type": "js",
-    "status": "active"
-  }
-}
+[
+  "-y",
+  "-z",
+  "python"
+]
