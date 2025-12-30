@@ -1,2 +1,2 @@
 #!/data/data/com.termux/files/usr/bin/bash
-python3 ~/tools/asteroid/seedling.py "$@" >> ~/tools/asteroid/agent/logs/saga_tales.log
+node ~/tools/asteroid/agent/helpers/seed.js "$@"
