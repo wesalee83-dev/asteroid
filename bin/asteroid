@@ -72,6 +72,7 @@ function showState() {
   } catch (err) {
     console.error('Could not read agent state:', err.message)
   }
+<<<<<<< HEAD
 }
 
 async function runPersona() {
@@ -85,4 +86,18 @@ async function runPersona() {
   const output = await runWithPersona(personaName, input)
 
   console.log(output)
+}
+=======
+export async function runMutation() {
+  polly("Applying mutation");
+  const mutated = mutate(state, mutation, `mutation-${state.mutations || 0}`);
+
+  polly("Saving new form");
+  fs.writeFileSync(statePath, JSON.stringify(mutated, null, 2));
+
+  const entry = `[${new Date().toISOString()}] Mutation → ${mutated.persona}`;
+  fs.appendFileSync(logPath, entry + "\n");
+
+  polly("Pipeline complete");
+  console.log(`Pipeline complete. New form: ${mutated.persona}`);
 }
