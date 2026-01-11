@@ -1,0 +1,7 @@
+# Ignore runtime logs and state
+tools/saga_tales.log
+tools/agent_state.json
+
+# Ignore system clutter
+.DS_Store
+node_modules/
