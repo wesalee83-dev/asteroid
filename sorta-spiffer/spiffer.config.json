@@ -1,0 +1,33 @@
+{
+  "duplicates": {
+    "enabled": true,
+    "strategy": "keep_biggest_and_smallest",
+    "thumbnail_max_kb": 80,
+    "delete_others": false
+  },
+  "safety": {
+    "default_dry_run": true,
+    "require_confirmation": true
+  },
+  "ignore": {
+    "extensions": [
+      ".svg",
+      ".exe",
+      ".apk",
+      ".rss"
+    ],
+    "patterns": [
+      "aegis-export",
+      "Google Passwords",
+      "GooglePasswords",
+      "pw",
+      "password",
+      "auth",
+      "backup",
+      "export"
+    ]
+  },
+  "logging": {
+    "verbose": true
+  }
+}
